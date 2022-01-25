@@ -1,0 +1,72 @@
+﻿<!-- ko with: home -->
+
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to ASP.NET Dictionary!</h1>
+    <p class="lead">This is a simple dictionary application written with ASP.NET, enjoy!</p>
+    <hr class="my-4">
+    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <div class="d-md-inline-flex flex-md-row">
+        <div class="input-group input-group-lg mb-3">
+
+            <input 
+                data-bind="validationOptions: {insertMessages: false, decorateInputElement: true, errorElementClass: 'is-invalid'}, value: app.home().keyword"
+                type="text"
+                class="form-control"
+                placeholder=""
+                aria-label="word-input"
+            >
+            
+            <div class="input-group-append input-group-lg">
+                <button class="btn btn-outline-secondary dropdown-toggle"
+                    type="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    data-bind="text: app.home().chosenLanguage()?.name">
+                </button>
+
+                <div class="dropdown-menu" data-bind="foreach: app.home().languageCollection()?.languages">
+                    <a href="#"
+                       class="dropdown-item"
+                       data-bind="text: $data.name, click: app.home().selectLanguage">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <button
+            data-bind="click: app.home().query"
+            class="ml-3 btn btn-success"
+            type="button"
+        >
+            Translate
+        </button>
+    
+    </div>
+
+    <div class="d-flex flex-row flex-wrap mb-3" data-bind="foreach: app.home().chosenLanguage()?.sourceDictionaries">
+        <button
+            class="m-1 btn"
+            data-bind="class: $data.class, text: $data.name, click: $data.toggleSelection">
+        </button>
+    </div>
+</div>
+
+<div style="display: none" data-bind="with: app.home().translateResult, visible: true">
+    <div class="row" data-bind="foreach: results">
+        <div class="col-md-4">
+            <div class="card">
+                <h5 class="card-header" data-bind="text: dictionaryName"></h5>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0" data-bind="foreach: results">
+                        <p data-bind="text: word"></p>
+                        <footer class="blockquote-footer mb-4" data-bind="text: meaning"></footer>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- /ko -->
